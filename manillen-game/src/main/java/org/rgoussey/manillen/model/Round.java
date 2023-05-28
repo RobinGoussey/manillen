@@ -5,19 +5,19 @@ import java.util.List;
 
 public class Round {
 
-    private final List<Hand> hands;
+    private final List<Trick> tricks;
 
 
     public Round() {
-        hands = new ArrayList<>();
+        tricks = new ArrayList<>();
     }
 
-    public void addHand(Hand hand) {
-        hands.add(hand);
+    public void addHand(Trick trick) {
+        tricks.add(trick);
     }
 
-    public List<Hand> getHands() {
-        return hands;
+    public List<Trick> getHands() {
+        return tricks;
     }
 
 }

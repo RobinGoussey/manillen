@@ -4,30 +4,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Hand {
+public class Trick {
     private final Card.Suit trump;
-    private final List<Player> playerOrdering;
-    Map<Player, Card> cards = new HashMap<>();
+    private final List<PlayerData> playerDataOrdering;
+    Map<PlayerData, Card> cards = new HashMap<>();
 
     /**
      * @param trump          Null if no trump
-     * @param playerOrdering The order in which the players play.
+     * @param playerDataOrdering The order in which the players play.
      */
-    public Hand(Card.Suit trump, List<Player> playerOrdering) {
+    public Trick(Card.Suit trump, List<PlayerData> playerDataOrdering) {
         this.trump = trump;
-        this.playerOrdering = playerOrdering;
+        this.playerDataOrdering = playerDataOrdering;
     }
 
-    public void playCard(Player player, Card card) {
-        cards.put(player, card);
+    public void playCard(PlayerData playerData, Card card) {
+        cards.put(playerData, card);
     }
 
 
     public Team getWinner() {
-        Player winner = playerOrdering.get(0);
+        PlayerData winner = playerDataOrdering.get(0);
         Card winningCard = cards.get(winner);
-        for (Player nextPlayer : playerOrdering.subList(0, playerOrdering.size() - 1)) {
-            Card newCard = cards.get(nextPlayer);
+        for (PlayerData nextPlayerData : playerDataOrdering.subList(0, playerDataOrdering.size() - 1)) {
+            Card newCard = cards.get(nextPlayerData);
             boolean newCardIsHigher = newCard.rank().getRank() > winningCard.rank().getRank();
             boolean suitsAreEqual = newCard.suit() == winningCard.suit();
             boolean higherSameSuit = suitsAreEqual && newCardIsHigher;
@@ -35,11 +35,11 @@ public class Hand {
                 boolean trumpIsPlayed = newCard.suit() == trump;
                 boolean higherTrump = trumpIsPlayed && (!suitsAreEqual || newCardIsHigher);
                 if (higherTrump) {
-                    winner = nextPlayer;
+                    winner = nextPlayerData;
                     winningCard = newCard;
                 }
             } else if (higherSameSuit) {
-                winner = nextPlayer;
+                winner = nextPlayerData;
                 winningCard = newCard;
             }
         }
