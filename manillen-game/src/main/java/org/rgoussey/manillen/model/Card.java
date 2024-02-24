@@ -9,6 +9,10 @@ public record Card(Suit suit, Rank rank) {
         Suit(int number) {
             this.number = number;
         }
+
+        public int getNumber() {
+            return number;
+        }
     }
 
 
